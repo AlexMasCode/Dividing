@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "Main.h"
 
 using namespace std;
@@ -8,8 +8,8 @@ double power(double x, int n);
 
 int main()
 {
-	double number = 1.2;
-	string powerNum = "2.1";
+	double number = -5;
+	string powerNum = "-9.4";
 
 	int denominator = 1;
 
@@ -18,6 +18,7 @@ int main()
 	string numeratorStr = "";
 	int numeratorInt = 0;
 
+	/*Перетворюємо степінь у звичайний дріб*/
 	for (char c : powerNum)
 	{
 		if (numeratorStr.empty() && c == '0')
@@ -43,11 +44,13 @@ int main()
 	numeratorInt = atoi(numeratorStr.c_str());
 
 
+	/*Число, яке буде спільним дільником для чисельника та знаменника(спростити дріб)*/
 	int divid;
 
 	int numeratorNSD = numeratorInt;
 	int denominatorNSD = denominator;
 
+	/*НСД пошук спільного дільника*/
 	while (true)
 	{
 		if (numeratorNSD == denominatorNSD)
@@ -65,6 +68,7 @@ int main()
 		}
 	}
 
+	/*Спрощення дробу*/
 	numeratorInt = numeratorInt / divid;
 	denominator = denominator / divid;
 
@@ -72,6 +76,7 @@ int main()
 	cout << "Denominator: " << denominator << endl;
 	cout << "Common denominator: " << divid << endl;
 
+	/*Вивід результату*/
 	if (numeratorInt == 1)
 	{
 		if (atoi(powerNum.c_str()) < 0)
@@ -101,6 +106,7 @@ int main()
 	return 0;
 }
 
+/*Піднесення числа до степеня*/
 double power(double x, int n)
 {
 	double res = 1;
@@ -118,16 +124,19 @@ double power(double x, int n)
 	return res;
 }
 
+/*Рахування кореня будь-якого степеня будь-якого числа, з точністю епсілент */
 double Nth_root(double number, int pr)
 {
 	double eps = 0.000001;
 	double prev_y, next_y;
 
 	next_y = number;
+
 	do
 	{
 		prev_y = next_y;
 		next_y = (prev_y * (pr - 1) + number / power(prev_y, pr - 1)) / pr;
 	} while (fabs(next_y - prev_y) > eps);
+
 	return next_y;
 }
